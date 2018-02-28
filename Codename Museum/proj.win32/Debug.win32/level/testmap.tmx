@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="116" height="116" tilewidth="32" tileheight="32" infinite="0" nextobjectid="10">
+ <tileset firstgid="1" source="tmw_desert_spacing.tsx"/>
+ <tileset firstgid="49" source="0x72_16x16DungeonTileset.v3.tsx"/>
+ <tileset firstgid="49" source="0x72_16x16DungeonTileset.v1.tsx"/>
+ <tileset firstgid="209" source="template.tsx"/>
+ <layer name="Tile Layer 2" width="116" height="116">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3VUQqAIBAFwL3/ET1NvyFRq6ZkzEAEJX34emsEAAAAAAB/VSZfrNGagUy/rZzustlfnZGZu7fRXFrWMV+p7ufnI7276j3z1fudmY3m7Xdd7bfzc19P+98zX7Pf8R+8b1YPe89aGY7JdLGnb/WaCDmtkNn/pzWZTundGnf5Zc+0ll4zV0ued+8ysxkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiDgAahCLYUDSAAA=
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="116" height="116">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu3awQqDIAAG4GTv/6Brp+i07bJLQQiZi5nLvu/yRwkJP4JJXQcAAABQ3n3KPiP7zHE5+dg/ZbiMYcoQjs3xJ7MnNmwPKUKfZeizLfpsS60+KaNWn88pX1+m75w067Mttfr0nVPG2danPtPO1idptfqcz42X+53UXmi+fpefGvyNWutzfu8t7Eu4gtrrE1i3PHdL7Stzn63di+/bp8K2o/9LiBMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGjDB/89gHpA0gAA
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1"/>
+</map>

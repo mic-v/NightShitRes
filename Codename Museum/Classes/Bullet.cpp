@@ -2,44 +2,49 @@
 
 Bullet::Bullet(Scene * scene, Vec2 position, Vec2 direction)
 {
-	spr = Sprite::create("bullet.png");
+	Sprite* sprite = Sprite::create("bullet.png");
 
-	spr->setAnchorPoint(Vec2(.5f, .5f));
-	spr->setPosition(position);
+	sprite->setAnchorPoint(Vec2(.5f, .5f));
+	sprite->setPosition(position);
 
-	scene->addChild(spr);
 	//Physiccs
-	PhysicsBody* phys = PhysicsBody::createBox(spr->getContentSize());
-	phys->setDynamic(true);
-	phys->setRotationEnable(false);
-	phys->setVelocity(1000 * direction.getNormalized());
-	phys->setTag(2);
-	phys->setCollisionBitmask(2);
-	phys->setContactTestBitmask(true);
+	body = PhysicsBody::createBox(spr->getContentSize());
+	body->setDynamic(true);
+	body->setRotationEnable(false);
+	body->setGravityEnable(false);
+	body->setVelocity(100 * direction.getNormalized());
+	body->setTag(2);
+	//body->setCollisionBitmask(2);
+	body->setContactTestBitmask(true);
+	sprite->setPhysicsBody(body);
 
-	spr->setPhysicsBody(phys);
-	spr->runAction(Sequence::create(DelayTime::create(3.0f), RemoveSelf::create(), NULL));
+	sprite->runAction(Sequence::create(DelayTime::create(3.0f), RemoveSelf::create(), NULL));
+
+	scene->addChild(sprite);
+
+	spr = sprite;
 }
 
 Bullet::Bullet(Layer * layer, Vec2 position, Vec2 direction)
 {
-	spr = Sprite::create("bullet.png");
+	Sprite* sprite = Sprite::create("bullet.png");
 	
-	spr->setAnchorPoint(Vec2(.5f, .5f));
-	spr->setPosition(position);
+	sprite->setAnchorPoint(Vec2(.5f, .5f));
+	sprite->setPosition(position);
 
-	layer->addChild(spr);
+	layer->addChild(sprite, 2);
 	//Physiccs
-	PhysicsBody* phys = PhysicsBody::createBox(spr->getContentSize());
-	phys->setDynamic(true);
-	phys->setRotationEnable(false);
-	phys->setVelocity(1000 * direction.getNormalized());
-	phys->setTag(2);
-	phys->setCollisionBitmask(2);
-	phys->setContactTestBitmask(true);
+	body = PhysicsBody::createBox(sprite->getContentSize());
+	body->setDynamic(true);
+	body->setRotationEnable(false);
+	//body->setCollisionBitmask(2);
+	body->setContactTestBitmask(0xFFFFFFFF);
+	body->setVelocity(1000 * direction.getNormalized());
+	body->setTag(2);
+	sprite->setPhysicsBody(body);
 
-	spr->setPhysicsBody(phys);
-	spr->runAction(Sequence::create(DelayTime::create(3.0f), RemoveSelf::create(), NULL));
+	sprite->runAction(Sequence::create(DelayTime::create(3.0f), RemoveSelf::create(), NULL));
+	spr = sprite;
 }
 
 int Bullet::getTag()

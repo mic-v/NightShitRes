@@ -21,7 +21,7 @@ public:
 	void updateEnemies(float deltaTime);
 	void findAndHurtEnemy(Node* enemyNode); //Find which enemy matches the node returned by the collision callback. Hurt that enemy
 
-	bool onContactBeginCallback(PhysicsContact& contact);
+	bool onContactBegin(PhysicsContact& contact);
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);

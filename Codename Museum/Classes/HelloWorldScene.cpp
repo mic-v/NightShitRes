@@ -12,7 +12,7 @@ Scene* HelloWorld::createScene()
 	HelloWorld* layer = HelloWorld::create();
 
 
-	//scene->getPhysicsWorld()->setGravity(Vec2(0, -1000));
+	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
 	scene->addChild(layer);
 	return scene;
 }
@@ -46,11 +46,7 @@ bool HelloWorld::init()
 
 	CAMERA->getCameraTarget()->setPosition(player->getPosition());
 	this->addChild(CAMERA->getCameraTarget());
-	
-	spr = Sprite::create("silencedGun.png");
-	spr->setPosition(Vec2(500, 500));
-	spr->setRotation(15.f);
-	this->addChild(spr);
+
 
 	////Sprite* sprit = Sprite::create("Player.png");
 	////PhysicsBody * body = PhysicsBody::createBox(spr->getContentSize());
@@ -111,20 +107,6 @@ bool HelloWorld::init()
         this->addChild(label, 1);
     }
 
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
 	this->runAction(CAMERA->getCamera());
 
 	Enemy enemy1 = Enemy(this, Vec2(1200, 300), 10);
@@ -133,6 +115,45 @@ bool HelloWorld::init()
 	enemies.push_back(enemy2);
 	Enemy enemy3 = Enemy(this, Vec2(1200, 700), 10);
 	enemies.push_back(enemy3);
+
+	vector<Sprite*> spr_list;
+	for (int i = 0; i < 27; i++)
+	{
+		Sprite* spri;
+		spri = Sprite::create("tile2.png");
+		if (spri == nullptr)
+		{
+
+		}
+		else
+		{
+			spri->setPosition(Vec2(0 + i * 128, 0));
+			spr_list.push_back(spri);
+			this->addChild(spri);
+		}
+	}
+
+	string resources = "level";
+	string file = resources + "/testmap2.tmx";
+
+	auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
+	CCASSERT(str != nullptr, "UNABLE TO OPEN FILE");
+
+	auto map = TMXTiledMap::createWithXML(str->getCString(), resources.c_str());
+	addChild(map, 0, 1);
+
+	auto s = map->getContentSize();
+	log("ContentSize: %f, %f", s.width, s.height);
+
+	auto& children = map->getChildren();
+	for (const auto &node : children)
+	{
+		auto child = static_cast<SpriteBatchNode*>(node);
+		child->getTexture()->setAntiAliasTexParameters();
+	}
+
+
+	initCollisionCallback();
 
 	this->scheduleUpdate();
     return true;
@@ -143,6 +164,7 @@ void HelloWorld::update(float dt)
 	player->update(dt);
 	updateEnemies(dt);
 	//auto catBask = 0x0001;
+	//INPUTS->clearForNextFrame();
 }
 
 void HelloWorld::initCollisionCallback()
@@ -151,7 +173,7 @@ void HelloWorld::initCollisionCallback()
 	EventListenerPhysicsContact* contactListener = EventListenerPhysicsContact::create();
 
 	//Assign the callback function
-	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::onContactBeginCallback, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::onContactBegin, this);
 
 	//Add the contact listener to the event dispatcher
 	this->_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
@@ -193,74 +215,28 @@ void HelloWorld::findAndHurtEnemy(Node * enemyNode)
 	}
 }
 
-bool HelloWorld::onContactBeginCallback(PhysicsContact & contact)
+bool HelloWorld::onContactBegin(PhysicsContact & contact)
 {
 	//Get the two nodes that took part in the collision
 	Node* nodeA = contact.getShapeA()->getBody()->getNode();
 	Node* nodeB = contact.getShapeB()->getBody()->getNode();
 
-	//Get the collision tags from the nodes
-	int tagA = nodeA->getPhysicsBody()->getTag();
-	int tagB = nodeB->getPhysicsBody()->getTag();
-
-	//Check to ensure both nodes actually exist, just in case. If they didn't just return false
+	//Get the collision tags from the node
 	if (nodeA && nodeB)
 	{
-		//Depending on which object was a enemy, if any, perform the required logic
-		if (nodeA->getPhysicsBody()->getCollisionBitmask() == 1 && nodeB->getPhysicsBody()->getCollisionBitmask() == 2)
+		if (nodeA->getTag() == 10)
 		{
 			nodeB->runAction(RemoveSelf::create());
-			findAndHurtEnemy(nodeA);
-			return true;
 		}
-		else if (nodeB->getPhysicsBody()->getCollisionBitmask() == 1 && nodeA->getPhysicsBody()->getCollisionBitmask() == 2)
+		else if (nodeB->getTag() == 10)
 		{
 			nodeA->runAction(RemoveSelf::create());
-			findAndHurtEnemy(nodeB);
-			return true;
 		}
-		else
-		{
-			return false;
-		}
-		//if (tagA == Enemy::getTag())
-		//{
-		//	//If the first object was an enemy and the second was an arrow
-		//	if (tagB == Bullet::getTag())
-		//	{
-		//		//Delete the arrow immediately
-		//		nodeB->runAction(RemoveSelf::create());
-
-		//		//Figure out which enemy was hit, using the first object in the collision as reference, and hurt that enemy correctly
-		//		findAndHurtEnemy(nodeA);
-
-		//		//Return true since the collision was correct and we want these two objects to collide
-		//		return true;
-		//	}
-		//}
-		//else if (tagB == Enemy::getTag())
-		//{
-		//	//If the second object was an enemy and the first an arrow
-		//	if (tagA == Bullet::getTag())
-		//	{
-		//		//Delete the arrow immediately
-		//		nodeA->runAction(RemoveSelf::create());
-
-		//		//Figure out which enemy was hit, using the second object in the collision as reference, and hurt that enemy correctly
-		//		findAndHurtEnemy(nodeB);
-
-		//		//Return true since the collision was correct and we want these two objects to collide
-		//		return true;
-		//	}
-		//}
-		//else
-		//{
-		//	//If it was another form of collision, just return false
-		//	return false;
-		//}
 	}
 	else
-		return false; //If the nodes don't exist, just return false
+		return false;
+
+	return false;
 }
 
 

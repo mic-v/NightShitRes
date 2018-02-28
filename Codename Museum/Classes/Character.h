@@ -17,16 +17,16 @@ public:
 	Character();
 	virtual ~Character();
 
-	virtual Sprite * getAttachedSprite() const
+	Sprite * getAttachedSprite() const
 	{
 		return spr;
 	}
-	virtual Scene * getAttachedScene() const
+	Scene * getAttachedScene() const
 	{
 		return attachedScene;
 	}
 
-	virtual Layer * getAttachedLayer() const
+	Layer * getAttachedLayer() const
 	{
 		return attachedLayer;
 	}

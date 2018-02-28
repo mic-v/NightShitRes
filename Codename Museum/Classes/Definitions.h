@@ -10,12 +10,13 @@ using namespace cocos2d;
 #define RIGHT Vec2(1,0);
 
 #define MAXACCEL 400
+#define MAXRUNACCEL 600
 
-#define PLAYERMASK 1
-#define ENEMYMASK 2
-#define PLAYERBULLETS 4
-#define ENEMYBULLETS 8
-#define BOUNDARY 16
+#define PLAYERMASK 0x0001
+#define ENEMYMASK 0x0002
+#define PLAYERBULLETS 0x0004
+#define ENEMYBULLETS 0x0008
+#define BOUNDARY 0x0016
 
 
 #endif   // !1

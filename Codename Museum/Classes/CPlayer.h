@@ -16,37 +16,28 @@ public:
 	CPlayer(Layer*);
 	virtual ~CPlayer();
 
-	virtual Sprite* getAttachedSprite() const
-	{
-		return spr;
-	}
-	virtual Scene * getAttachedScene() const
-	{
-		return attachedScene;
-	}
-
-	virtual Layer * getAttachedLayer() const
-	{
-		return attachedLayer;
-	}
-
 	virtual void update(float delta);
 
 	void handleInput(float);
 	void updateCamera(float);
-	void updateGunPosition();
+	void updatePlayerAnim(float);
 
 	Vec2 getPosition() const;
 protected:
 	Vec2 position;
 	Vec2 velocity;
+	Vec2 lastVel;
 	int speed;
 	int counter = 0;
 	bool isMoving;
+	bool isSprinting;
 	Animate* anim;
 	Animate* animR;
-	Animate* idle;
-	Vector<SpriteFrame*> frames;
+	Animate* runAnimR;
+	Animate* runAnimL;
+	Animate* idleR;
+	Animate* idleL;
+
 };
 
 

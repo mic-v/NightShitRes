@@ -20,7 +20,7 @@ Enemy::Enemy(Scene * attachedScene_, Vec2 postion_, int health_)
 	phys->setContactTestBitmask(true);
 
 	spr->setPhysicsBody(phys);
-	attachedScene_->addChild(spr, 1031);
+	attachedScene_->addChild(spr, 1);
 }
 
 Enemy::Enemy(Layer * attachedLayer_, Vec2 postion_, int health_)
@@ -31,14 +31,15 @@ Enemy::Enemy(Layer * attachedLayer_, Vec2 postion_, int health_)
 	spr->setPosition(postion_);
 	spr->setAnchorPoint(Vec2(0.5f, 0.5f));
 
-	PhysicsBody* phys = PhysicsBody::createBox(spr->getContentSize());
-	phys->setDynamic(false);
-	phys->setTag(1);
-	phys->setCollisionBitmask(1);
-	phys->setContactTestBitmask(true);
+	body = PhysicsBody::createBox(spr->getContentSize());
+	body->setDynamic(false);
+	body->setRotationEnable(false);
+	body->setContactTestBitmask(0xFFFFFFFF);
+	body->setTag(10);
+	spr->setTag(10);
 
-	spr->setPhysicsBody(phys);
-	attachedLayer_->addChild(spr, 1031);
+	spr->setPhysicsBody(body);
+	attachedLayer_->addChild(spr, 1);
 
 }
 

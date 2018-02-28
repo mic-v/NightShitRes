@@ -10,6 +10,9 @@ Character::Character()
 
 Character::~Character()
 {
+	spr = nullptr;
+	attachedScene = nullptr;
+	attachedLayer = nullptr;
 }
 
 

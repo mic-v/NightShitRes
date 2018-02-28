@@ -28,13 +28,11 @@ public:
 	{
 		return attachedLayer;
 	}
-	virtual void update(float delta)
-	{
+	virtual void update(float);
 
-	}
-
-protected:
-
+private:
+	float shotTimer;
+	bool fired;
 };
 
 #endif
