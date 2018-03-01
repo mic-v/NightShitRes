@@ -1,4 +1,9 @@
-﻿  Bullet.cpp
-  Codename Museum.vcxproj -> C:\Users\100657260\Documents\Res\Codename Museum\proj.win32\Debug.win32\Codename Museum.exe
-  Codename Museum.vcxproj -> C:\Users\100657260\Documents\Res\Codename Museum\proj.win32\Debug.win32\Codename Museum.pdb (Full PDB)
+﻿  CPlayer.cpp
+  HelloWorldScene.cpp
+c:\users\pc-m\documents\repositories\nightshitres\codename museum\classes\gamecamera.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file ..\Classes\HelloWorldScene.cpp)
+c:\users\pc-m\documents\repositories\nightshitres\codename museum\classes\gamecamera.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file ..\Classes\CPlayer.cpp)
+c:\users\pc-m\documents\repositories\nightshitres\codename museum\classes\cplayer.cpp(68): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\pc-m\documents\repositories\nightshitres\codename museum\classes\cplayer.cpp(175): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\pc-m\documents\repositories\nightshitres\codename museum\classes\cplayer.cpp(195): warning C4018: '<': signed/unsigned mismatch
+  Codename Museum.vcxproj -> C:\Users\PC-M\Documents\Repositories\NightShitRes\Codename Museum\proj.win32\Debug.win32\Codename Museum.exe
   0 File(s) copied

@@ -38,8 +38,8 @@ bool HelloWorld::init()
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 
-	auto bg = LayerColor::create(Color4B(200, 190, 150, 255));
-	this->addChild(bg);
+	//auto bg = LayerColor::create(Color4B(200, 190, 150, 255));
+	//this->addChild(bg);
 
 
 	player = new CPlayer(this);
@@ -134,12 +134,12 @@ bool HelloWorld::init()
 	}
 
 	string resources = "level";
-	string file = resources + "/testmap2.tmx";
+	string file = resources + "/testmap3.tmx";
 
 	auto str = __String::createWithContentsOfFile(FileUtils::getInstance()->fullPathForFilename(file.c_str()).c_str());
 	CCASSERT(str != nullptr, "UNABLE TO OPEN FILE");
 
-	auto map = TMXTiledMap::createWithXML(str->getCString(), resources.c_str());
+	map = TMXTiledMap::createWithXML(str->getCString(), resources.c_str());
 	addChild(map, 0, 1);
 
 	auto s = map->getContentSize();
@@ -151,6 +151,39 @@ bool HelloWorld::init()
 		auto child = static_cast<SpriteBatchNode*>(node);
 		child->getTexture()->setAntiAliasTexParameters();
 	}
+	auto layer = map->getLayer("Meta");
+	for (int i = 0; i < layer->getLayerSize().width; i++)
+	{
+		for (int j = 0; j < layer->getLayerSize().height; j++)
+		{
+			int tileGid = layer->getTileGIDAt(Point(i, j));
+			if (tileGid)
+			{
+				auto properties = map->getPropertiesForGID(tileGid).asValueMap();
+				if (!properties.empty())
+				{
+					auto collision = properties["Collidable"].asString();
+					if (collision == "True")
+					{
+						cout << "hello" << endl;
+						cout << "x :" << i << " y: " << j << endl;
+						auto tile = layer->getTileAt(Vec2(i, j));
+						auto tilePhysics = PhysicsBody::createBox(Size(64,64), PhysicsMaterial(1.0f, 1.0f, 0.0f));
+						tilePhysics->setDynamic(false);
+						tile->setPhysicsBody(tilePhysics);
+					}
+				}
+			}
+			//log("GID:%i, Properties:%s", i, map->getPropertiesForGID(i).asValueMap()["testmap3"].asString().c_str());
+		}
+
+	}
+	//for (int i = 1; i <= 20; i++) {
+	//	for (const auto& value : map->getPropertiesForGID(i).asValueMap())
+	//	{
+	//		log("GID:%i, Properties:%s, %s", i, value.first.c_str(), value.second.asString().c_str());
+	//	}
+	//}
 
 
 	initCollisionCallback();

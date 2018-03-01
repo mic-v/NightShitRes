@@ -60,7 +60,6 @@ void Weapon::update(float dt)
 		position_ = (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f)) + position_.getNormalized() + direction.getNormalized() * 60.f;
 		Bullet bullet(attachedLayer, position_, direction);
 		fired = true;
-		std::cout << "fire " << std::endl;
 	}
 	//Vec2 test = CAMERA->getCameraTarget()->convertToWorldSpace(spr->getPosition());
 	//node->drawLine(Vec2(0, 0), test, Color4F(1.0f, 0.f, 0.f, 1.f));
@@ -70,7 +69,6 @@ void Weapon::update(float dt)
 	{
 		shotTimer += dt;
 	}
-	std::cout << shotTimer << std::endl;
 	if (shotTimer > 0.5f)
 	{
 		shotTimer = 0;

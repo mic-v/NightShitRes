@@ -10,6 +10,7 @@ using namespace cocos2d;
 class HelloWorld : public cocos2d::Layer
 {
 public:
+	// implement the "static create()" method manually
 	CREATE_FUNC(HelloWorld);
     static cocos2d::Scene* createScene();
 
@@ -25,12 +26,24 @@ public:
 
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-    
-    // implement the "static create()" method manually
+	
+	Point tileCoordForPosition(Point position)
+	{
+		int x = position.x / map->getTileSize().width;
+		int y = ((map->getMapSize().height * map->getTileSize().height) - position.y) / map->getTileSize().height;
+		return Point(x, y);
+	}
+	Point PostionForTileCoord(Point position)
+	{
+		int x = position.x * map->getTileSize().width;
+		int y = (map->getMapSize().height * map->getTileSize().height) - position.y * map->getTileSize().height;
+		return Point(x, y);
+	}
 private:
 	Sprite* spr;
 	CPlayer* player;
 	vector<Enemy> enemies;
+	TMXTiledMap* map;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
