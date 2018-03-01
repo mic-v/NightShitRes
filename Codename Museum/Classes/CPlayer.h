@@ -16,7 +16,7 @@ public:
 	CPlayer(Layer*);
 	virtual ~CPlayer();
 
-	virtual void update(float delta);
+	void update(float delta);
 
 	void handleInput(float);
 	void updateCamera(float);

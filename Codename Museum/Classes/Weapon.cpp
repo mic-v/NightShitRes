@@ -1,6 +1,7 @@
 #include "Weapon.h"
 #include "Bullet.h"
 #include "InputHandler.h"
+#include "DisplayHandler.h"
 #include "GameCamera.h"
 
 Weapon::Weapon()
@@ -49,15 +50,22 @@ Weapon::~Weapon()
 void Weapon::update(float dt)
 {
 	bool pressed = INPUTS->getMouseButtonPress(MouseButton::BUTTON_LEFT);
+
+	DrawNode* node = DrawNode::create();
 	if (pressed && shotTimer == 0)
 	{
-		Vec2 position_ = spr->convertToWorldSpace(spr->getPosition()) + CAMERA->getOrigin() - (spr->convertToWorldSpace(spr->getPosition()) - CAMERA->getScreenMouse()) / 4.f;
-		Vec2 direction = CAMERA->getScreenMouse() - spr->convertToWorldSpace(spr->getPosition());
-		position_ = spr->convertToWorldSpace(spr->getPosition()) + position_.getNormalized() + direction.getNormalized() * 100.f;
-		Bullet bullet(attachedLayer, position_, CAMERA->getScreenMouse() - spr->convertToWorldSpace(spr->getPosition()));
+
+		Vec2 position_ = CAMERA->getCameraTarget()->convertToWorldSpace(spr->getPosition()) + CAMERA->getOrigin() - (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f) - CAMERA->getScreenMouse()) / 4.f;
+		Vec2 direction = CAMERA->getScreenMouse() - (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f));
+		position_ = (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f)) + position_.getNormalized() + direction.getNormalized() * 60.f;
+		Bullet bullet(attachedLayer, position_, direction);
 		fired = true;
 		std::cout << "fire " << std::endl;
 	}
+	//Vec2 test = CAMERA->getCameraTarget()->convertToWorldSpace(spr->getPosition());
+	//node->drawLine(Vec2(0, 0), test, Color4F(1.0f, 0.f, 0.f, 1.f));
+	//attachedLayer->addChild(node);
+
 	if (fired)
 	{
 		shotTimer += dt;

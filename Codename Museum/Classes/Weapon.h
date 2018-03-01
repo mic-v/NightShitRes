@@ -28,7 +28,7 @@ public:
 	{
 		return attachedLayer;
 	}
-	virtual void update(float);
+	void update(float);
 
 private:
 	float shotTimer;

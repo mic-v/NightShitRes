@@ -2,6 +2,7 @@
 #include "GameCamera.h"
 #include "Bullet.h"
 #include "InputHandler.h"
+#include "DisplayHandler.h"
 
 CPlayer::CPlayer()
 {
@@ -290,6 +291,12 @@ void CPlayer::handleInput(float delta)
 	}
 	spr->setPosition(position);
 
+	//DrawNode* node = DrawNode::create();
+	//Vec2 test = CAMERA->getCameraTarget()->convertToWorldSpace(weapons[cWeapNum]->getAttachedSprite()->getPosition()) + CAMERA->getOrigin() - (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f) - CAMERA->getScreenMouse()) / 4.f;
+	//Vec2 direction = CAMERA->getScreenMouse() - (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f));
+	//test = (CAMERA->getOrigin() + Vec2(DISPLAY->getWindowSizeAsVec2().x * 0.5f, DISPLAY->getWindowSizeAsVec2().y * 0.5f)) + test.getNormalized() + direction.getNormalized() * 50;
+	//node->drawLine(Vec2(0, 0), test, Color4F(0.f, 1.f, 0.f, 1.f));
+	//attachedLayer->addChild(node);
 	//bool pressed = INPUTS->getMouseButtonPress(MouseButton::BUTTON_LEFT);
 	//if (pressed)
 	//{

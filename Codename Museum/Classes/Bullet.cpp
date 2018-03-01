@@ -27,8 +27,9 @@ Bullet::Bullet(Scene * scene, Vec2 position, Vec2 direction)
 
 Bullet::Bullet(Layer * layer, Vec2 position, Vec2 direction)
 {
-	Sprite* sprite = Sprite::create("bullet.png");
-	
+	Sprite* sprite = Sprite::create("0305Bullet.png");
+	float rot_ = Vec2::angle(Vec2(0, 1), direction.getNormalized()) * (180.f / M_PI) - 90.f;
+	sprite->setRotation(rot_);
 	sprite->setAnchorPoint(Vec2(.5f, .5f));
 	sprite->setPosition(position);
 
@@ -36,7 +37,7 @@ Bullet::Bullet(Layer * layer, Vec2 position, Vec2 direction)
 	//Physiccs
 	body = PhysicsBody::createBox(sprite->getContentSize());
 	body->setDynamic(true);
-	body->setRotationEnable(false);
+	body->setRotationEnable(true);
 	//body->setCollisionBitmask(2);
 	body->setContactTestBitmask(0xFFFFFFFF);
 	body->setVelocity(1000 * direction.getNormalized());
